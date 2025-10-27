@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import Input from "./Input";
 
-const CreateProject = ({onCreateProject, onCancleIsCreating}) => {
+const CreateProject = ({errors, onCreateProject, onCancleIsCreating}) => {
     const title = useRef();
     const description = useRef();
     const dueDate = useRef();
@@ -13,9 +13,9 @@ const CreateProject = ({onCreateProject, onCancleIsCreating}) => {
                 <button onClick={() => onCreateProject(title, description, dueDate)} className="px-6 py-2 rounded-md bg-stone-800 text-stone-50 hover:bg-stone-950">Save</button>
             </menu>
             <form>
-                <Input ref={title} label={'Title'} type="text" />
-                <Input ref={description} label={'Description'} textarea={true} />
-                <Input ref={dueDate} label={'Due date'} type="date" />
+                <Input error={errors.title} ref={title} label={'Title'} type="text" />
+                <Input error={errors.description}  ref={description} label={'Description'} textarea={true} />
+                <Input error={errors.dueDate}  ref={dueDate} label={'Due date'} type="date" />
             </form>
         </div>
     )
