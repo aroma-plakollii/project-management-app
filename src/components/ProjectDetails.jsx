@@ -1,15 +1,15 @@
 import { useRef, useState } from "react";
 import Modal from "./Modal";
 
-const ProjectDetails = ({project, error, selectedProject, onAddTasks, onDeleteProject, onClearTask}) => {
+const ProjectDetails = ({project, onAddTasks, onDeleteProject, onClearTask}) => {
     const dialog = useRef();
     const task = useRef();
     const [taskIndex, setTaskIndex] = useState(null)
 
-    const handleModal = (type, index = null) => {
+    const handleModal = (type, id = null) => {
         dialog.current.open(type);
         if(type === 'task')
-            setTaskIndex(index);
+            setTaskIndex(id);
     }
 
     return (
