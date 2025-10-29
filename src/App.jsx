@@ -95,6 +95,7 @@ function App() {
   let content = (
     <ProjectDetails
     project={selectedProject}
+    tasks={projectState.tasks}
     onAddTasks={handleAddTasks}
     onDeleteProject={handleDeleteProject}
     onClearTask={handleClearTask} />

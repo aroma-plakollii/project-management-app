@@ -1,15 +1,34 @@
 import { useRef, useState } from "react";
 import Modal from "./Modal";
 
-const ProjectDetails = ({project, onAddTasks, onDeleteProject, onClearTask}) => {
+const ProjectDetails = ({project, tasks, onAddTasks, onDeleteProject, onClearTask}) => {
     const dialog = useRef();
     const task = useRef();
     const [taskIndex, setTaskIndex] = useState(null)
+    const [error, setError] = useState(false);
+    const projectTasks = tasks.filter(task => task.selectedProject === project.id);
+    console.log(tasks);
 
     const handleModal = (type, id = null) => {
         dialog.current.open(type);
         if(type === 'task')
             setTaskIndex(id);
+    }
+
+    const handleAddTasks = () => {
+        const enteredTask = task.current.value;
+
+        setError(enteredTask.trim() === '');
+
+        if(enteredTask.trim() !== ''){
+            const newTask = {
+                id: Math.random(),
+                selectedProject: project.id,
+                task: enteredTask,
+            }
+
+            onAddTasks(newTask);
+        }
     }
 
     return (
@@ -28,17 +47,17 @@ const ProjectDetails = ({project, onAddTasks, onDeleteProject, onClearTask}) => 
                 <h2 className="text-2xl font-bold text-stone-700 mb-4">Tasks</h2>
                 <div className="flex items-center gap-4">
                     <input ref={task} className={`w-64 px-2 py-1 rounded-sm bg-stone-200 ${error ? 'border border-red-500' : ''}`} />
-                    <button onClick={() => onAddTasks(task, selectedProject)} className="text-stone-700 hover:text-stone-950">Add Task</button>
+                    <button onClick={handleAddTasks} className="text-stone-700 hover:text-stone-950">Add Task</button>
                 </div>
-                {project.tasks.length > 0 ? 
+                {tasks.length > 0 ? 
                 (<ul  className="p-4 mt-8 rounded-md bg-stone-100">
-                {project.tasks.map((task) => (
-                    <li key={task.id} className="flex justify-between my-4">
-                        <p className="text-stone-800 my-4">{task}</p>
-                        {/* <button onClick={() => onClearTask(selectedProject, index)} className="text-stone-700 hover:text-red-500">Clear</button> */}
-                        <button onClick={() => handleModal('task', task.id)} className="text-stone-700 hover:text-red-500">Clear</button>
-                    </li>
-                ))}
+                    {projectTasks.map((task) => (
+                        <li key={task.id} className="flex justify-between my-4">
+                            <p className="text-stone-800 my-4">{task.task}</p>
+                            {/* <button onClick={() => onClearTask(selectedProject, index)} className="text-stone-700 hover:text-red-500">Clear</button> */}
+                            <button onClick={() => handleModal('task', task.id)} className="text-stone-700 hover:text-red-500">Clear</button>
+                        </li>
+                    ))}
                 </ul>)
                 :
                 (<p className="text-stone-800 my-4">This project does not have any tasks yet</p>)}
