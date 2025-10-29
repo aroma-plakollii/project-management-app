@@ -73,21 +73,26 @@ function App() {
   };
 
   const handleDeleteProject = (id) => {
+    console.log(projectState.projects.filter(project => project.id !== id));
     setProjectState((prevState) => {
       return {
         ...prevState,
+        selectedProject: undefined,
         projects: prevState.projects.filter(project => project.id !== id)
       }
-    })
+    });
   }
 
-  const handleClearTask = (id) => {
+  const handleClearTask = (id, dialog) => {
     setProjectState((prevState) => {
       return {
         ...prevState,
+        selectedProject: prevState.selectedProject,
         tasks: prevState.tasks.filter(task => task.id !== id)
       }
-    })
+    });
+
+    dialog.current.close();
   };
 
   const selectedProject = projectState.projects.find(project => project.id === projectState.selectedProject);

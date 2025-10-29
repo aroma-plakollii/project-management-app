@@ -7,9 +7,9 @@ const ProjectDetails = ({project, tasks, onAddTasks, onDeleteProject, onClearTas
     const [taskIndex, setTaskIndex] = useState(null)
     const [error, setError] = useState(false);
     const projectTasks = tasks.filter(task => task.selectedProject === project.id);
-    console.log(tasks);
 
     const handleModal = (type, id = null) => {
+        console.log(type, id);
         dialog.current.open(type);
         if(type === 'task')
             setTaskIndex(id);
@@ -27,13 +27,14 @@ const ProjectDetails = ({project, tasks, onAddTasks, onDeleteProject, onClearTas
                 task: enteredTask,
             }
 
+            task.current.value = ''
             onAddTasks(newTask);
         }
     }
 
     return (
         <>
-            {/* <Modal ref={dialog} taskIndex={taskIndex} selectedProject={project.id} onDeleteProject={onDeleteProject} onClearTask={onClearTask} /> */}
+            <Modal ref={dialog} taskIndex={taskIndex} selectedProject={project.id} onDeleteProject={onDeleteProject} onClearTask={onClearTask} />
             <div className="w-8/12 mt-16">
                 <header className="pb-4 mb-4 border-b-2 border-stone-300">
                     <div className="flex items-center justify-between">
