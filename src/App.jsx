@@ -27,6 +27,7 @@ function App() {
       ...prevState,
       selectedProject: null
     }})
+
   }
 
   const handleCancleIsCreating = () => {
@@ -104,8 +105,11 @@ function App() {
       <NoProject onIsCreating={handleIsCreating} />
     )
   }else if(projectState.selectedProject === null){
-    <CreateProject onCreateProject={handleCreateProject} onCancleIsCreating={handleCancleIsCreating} />
+    content = (
+      <CreateProject onCreateProject={handleCreateProject} onCancleIsCreating={handleCancleIsCreating} />
+    )
   }
+
   return (
       <main className="h-screen my-8 flex gap-8">
         <Sidebar projects={projectState.projects} onIsCreating={handleIsCreating} onSelectedProject={handleSelectedProject} />

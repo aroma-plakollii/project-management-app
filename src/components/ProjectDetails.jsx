@@ -14,7 +14,7 @@ const ProjectDetails = ({project, onAddTasks, onDeleteProject, onClearTask}) => 
 
     return (
         <>
-            <Modal ref={dialog} taskIndex={taskIndex} selectedProject={selectedProject} onDeleteProject={onDeleteProject} onClearTask={onClearTask} />
+            {/* <Modal ref={dialog} taskIndex={taskIndex} selectedProject={project.id} onDeleteProject={onDeleteProject} onClearTask={onClearTask} /> */}
             <div className="w-8/12 mt-16">
                 <header className="pb-4 mb-4 border-b-2 border-stone-300">
                     <div className="flex items-center justify-between">
@@ -32,11 +32,11 @@ const ProjectDetails = ({project, onAddTasks, onDeleteProject, onClearTask}) => 
                 </div>
                 {project.tasks.length > 0 ? 
                 (<ul  className="p-4 mt-8 rounded-md bg-stone-100">
-                {project.tasks.map((task, index) => (
-                    <li key={index} className="flex justify-between my-4">
+                {project.tasks.map((task) => (
+                    <li key={task.id} className="flex justify-between my-4">
                         <p className="text-stone-800 my-4">{task}</p>
                         {/* <button onClick={() => onClearTask(selectedProject, index)} className="text-stone-700 hover:text-red-500">Clear</button> */}
-                        <button onClick={() => handleModal('task', index)} className="text-stone-700 hover:text-red-500">Clear</button>
+                        <button onClick={() => handleModal('task', task.id)} className="text-stone-700 hover:text-red-500">Clear</button>
                     </li>
                 ))}
                 </ul>)
